@@ -1,7 +1,16 @@
 from django.contrib import admin
+from .models import Question, Choice
 
-# Register your models here.
-from django.contrib import admin
-from .models import Question
+class ChoiceInline(admin.TabularInline):  # Or use StackedInline for vertical layout
+    model = Choice
+    extra = 3  # Number of empty choice forms to display
 
-admin.site.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+        ("Date information", {"fields": ["pub_date"]}),
+    ]
+    inlines = [ChoiceInline]
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
