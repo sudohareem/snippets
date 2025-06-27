@@ -4,7 +4,8 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Question, Choice
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Question
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
@@ -22,6 +23,21 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+class QuestionCreateView(CreateView):
+    model = Question
+    fields = ["question_text", "pub_date"]
+    template_name = "polls/question_form.html"
+
+class QuestionUpdateView(UpdateView):
+    model = Question
+    fields = ["question_text", "pub_date"]
+    template_name = "polls/question_form.html"
+
+class QuestionDeleteView(DeleteView):
+    model = Question
+    success_url = "/polls/"
+    template_name = "polls/question_confirm_delete.html"
 
 
 def vote(request, question_id):
