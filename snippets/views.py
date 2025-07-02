@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 
+
 @api_view(['GET', 'POST'])
 def snippet_list(request):
     if request.method == 'GET':
@@ -40,6 +41,6 @@ def snippet_detail(request, pk):
     elif request.method == 'DELETE':
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-from django.shortcuts import render
-
-# Create your views here.
+@api_view(['GET'])
+def snippet_list(request):
+    return Response({"message": "Hello from Snippets API!"})
